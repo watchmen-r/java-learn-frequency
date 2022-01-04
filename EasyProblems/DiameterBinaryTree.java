@@ -21,7 +21,7 @@ class DiameterBinaryTree {
         int leftPath = dfs(node.left);
         int rightPath = dfs(node.right);
 
-        // ここの発想が難しい、、
+        // ここの発想が難しい
         diameter = Math.max(diameter, leftPath + rightPath);
 
         return Math.max(leftPath, rightPath) + 1;
