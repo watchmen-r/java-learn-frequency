@@ -3,24 +3,25 @@ import java.util.Map;
 
 public class LongestSubstringWithout {
     public int lengthOfLongestSubstring(String s) {
-        Map<Character, Integer> map = new HashMap<>();
-        int max = 0;
-        int count = 0;
-        int ahead = 0;
+        int[] chars = new int[128];
 
-        while(ahead < s.length()) {
-            if(map.containsKey(s.charAt(ahead))) {
-                max = Math.max(max, count);
-                int tmp = ahead;
-                ahead = map.get(s.charAt(ahead)) + 1;
-                map.put(s.charAt(tmp), tmp);
-                count = 0;
-            } else {
-                map.put(s.charAt(ahead), ahead);
-                ahead++;
-                count++;
+        int left = 0;
+        int right = 0;
+
+        int res = 0;
+        while(right < s.length()) {
+            char r = s.charAt(right);
+            chars[r]++;
+
+            while(chars[r] > 1) {
+                char l = s.charAt(left);
+                chars[l]--;
+                left++;
             }
+
+            res = Math.max(res, right - left + 1);
+            right++;
         }
-        return max;
+        return res;
     }
 }
