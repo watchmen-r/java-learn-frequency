@@ -4,28 +4,20 @@ class CompareVersionNumbers {
     }
 
     public int compareVersion(String version1, String version2) {
-        int p1 = 0;
-        int p2 = 0;
+        String[] nums1 = version1.split("\\.");
+        String[] nums2 = version2.split("\\.");
 
-        while (p1 < version1.length() || p2 < version1.length()) {
-            int dot1 = version1.indexOf(".", p1);
-            int dot2 = version2.indexOf(".", p2);
+        int n1 = nums1.length;
+        int n2 = nums2.length;
 
-            String subVer1 = dot1 == -1 ? "0" : version1.substring(p1, dot1);
-            String subVer2 = dot2 == -1 ? "0" : version2.substring(p2, dot2);
+        int i1, i2;
 
-            int ver1Num = Integer.parseInt(subVer1);
-            int ver2Num = Integer.parseInt(subVer2);
-
-            if (ver1Num < ver2Num) {
-                return -1;
-            } else if (ver1Num > ver2Num) {
-                return 1;
+        for(int i = 0; i < Math.max(n1, n2); i++) {
+            i1 = i < n1 ? Integer.parseInt(nums1[i]) : 0;
+            i2 = i < n2 ? Integer.parseInt(nums2[i]) : 0;
+            if(i1 != i2) {
+                return i1 > i2 ? 1 : -1;
             }
-
-            p1 = dot1 == -1 ? p1 : dot1 + 1;
-            p2 = dot2 == -1 ? p2 : dot2 + 1;
-
         }
         return 0;
     }
