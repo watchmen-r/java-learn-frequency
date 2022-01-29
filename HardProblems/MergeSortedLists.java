@@ -1,3 +1,5 @@
+import java.util.PriorityQueue;
+
 class ListNode {
     int val;
     ListNode next;
@@ -17,13 +19,13 @@ class ListNode {
 
 class MergeSortedLists {
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists.length == 0) {
+        if (lists.length == 0) {
             return null;
         }
 
         int endCount = 0;
-        for(int i = 0; i < lists.length; i++) {
-            if(lists[i] == null) {
+        for (int i = 0; i < lists.length; i++) {
+            if (lists[i] == null) {
                 endCount++;
             }
         }
@@ -46,10 +48,36 @@ class MergeSortedLists {
             nowNode = nowNode.next;
             lists[minimum] = lists[minimum].next;
 
-            if(lists[minimum] == null) {
+            if (lists[minimum] == null) {
                 endCount++;
             }
         }
         return answer.next;
+    }
+
+    public ListNode anotherMergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0)
+            return null;
+
+        PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(lists.length, (a, b) -> a.val - b.val);
+
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+
+        for(ListNode node : lists) {
+            if(node != null) {
+                queue.add(node);
+            }
+        }
+
+        while(!queue.isEmpty()) {
+            tail.next = queue.poll();
+            tail = tail.next;
+
+            if(tail.next != null) {
+                queue.add(tail.next);
+            }
+        }
+        return dummy.next;
     }
 }
