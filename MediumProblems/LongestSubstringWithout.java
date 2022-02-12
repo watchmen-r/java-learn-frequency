@@ -1,27 +1,28 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LongestSubstringWithout {
     public int lengthOfLongestSubstring(String s) {
-        int[] chars = new int[128];
-
         int left = 0;
         int right = 0;
 
-        int res = 0;
-        while(right < s.length()) {
-            char r = s.charAt(right);
-            chars[r]++;
+        int answer = 0;
 
-            while(chars[r] > 1) {
-                char l = s.charAt(left);
-                chars[l]--;
-                left++;
+        Map<Character, Integer> map = new HashMap<>();
+
+        while (right < s.length()) {
+            char letter = s.charAt(right);
+
+            if (map.containsKey(letter)) {
+                // ここが思いつかなかった。
+                left = Math.max(map.get(letter) + 1, left);
             }
-
-            res = Math.max(res, right - left + 1);
+            answer = Math.max(answer, right - left + 1);
+            map.put(letter, right);
             right++;
         }
-        return res;
+        return answer;
     }
 }
