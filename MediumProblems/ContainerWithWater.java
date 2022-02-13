@@ -2,17 +2,17 @@ class ContainerWithWater {
     public int maxArea(int[] height) {
         int left = 0;
         int right = height.length - 1;
-        int answer = 0;
 
+        int area = 0;
         while (left < right) {
-            int minHeight = Math.min(height[left], height[right]);
-            answer = Math.max(answer, minHeight * minHeight * (right - left));
-            if(left <= right) {
+            area = Math.max(area, (right - left) * Math.min(height[right], height[left]));
+
+            if (height[left] < height[right]) {
                 left++;
             } else {
                 right--;
             }
         }
-        return answer;
+        return area;
     }
 }
