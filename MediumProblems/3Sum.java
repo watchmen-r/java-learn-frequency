@@ -23,6 +23,7 @@ class 3Sum {
             } else {
                 res.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
                 lo++; hi--;
+                // 次のloやhiが同じだった場合は、同じ答えになってしまうため飛ばす
                 while(lo < hi && nums[lo] == nums[lo - 1]) {
                     lo++;
                 }
