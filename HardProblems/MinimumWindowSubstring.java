@@ -20,11 +20,12 @@ class MinimumWindowSubstring {
         int l = 0;
         int r = 0;
 
-        // tにあるユニークな文字数を格納
+        // 必要な数が揃った文字をカウントする
         int formed = 0;
 
         Map<Character, Integer> windowCounts = new HashMap<Character, Integer>();
 
+        // スライドする際に使う(index1=window length, index2=left, index3=right)
         int[] ans = { -1, 0, 0 };
 
         while (r < s.length()) {
@@ -32,11 +33,14 @@ class MinimumWindowSubstring {
             int count = windowCounts.getOrDefault(c, 0);
             windowCounts.put(c, count + 1);
             
+            // 必要な数が揃ったらインクリメント
             if (dictT.containsKey(c) && windowCounts.get(c).intValue() == dictT.get(c).intValue()) {
                 formed++;
             }
 
+            // 必要な数が揃ったらスライドする
             while(l <= r && formed == required) {
+                // windowの左の文字
                 c = s.charAt(l);
 
                 if(ans[0] == -1 || r - l + 1 < ans[0]) {
