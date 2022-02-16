@@ -4,19 +4,33 @@ class CompareVersionNumbers {
     }
 
     public int compareVersion(String version1, String version2) {
-        String[] nums1 = version1.split("\\.");
-        String[] nums2 = version2.split("\\.");
+        String[] arr1 = version1.split("\\.");
+        String[] arr2 = version2.split("\\.");
 
-        int n1 = nums1.length;
-        int n2 = nums2.length;
+        int i = 0;
+        while (i < arr1.length && i < arr2.length) {
+            int v1num = Integer.parseInt(arr1[i]);
+            int v2num = Integer.parseInt(arr2[i]);
 
-        int i1, i2;
+            if (v1num < v2num) {
+                return -1;
+            }
 
-        for(int i = 0; i < Math.max(n1, n2); i++) {
-            i1 = i < n1 ? Integer.parseInt(nums1[i]) : 0;
-            i2 = i < n2 ? Integer.parseInt(nums2[i]) : 0;
-            if(i1 != i2) {
-                return i1 > i2 ? 1 : -1;
+            if (v1num > v2num) {
+                return 1;
+            }
+            i++;
+        }
+        if (arr1.length == arr2.length)
+            return 0;
+
+        String[] target = arr1.length < arr2.length ? arr2 : arr1;
+        int answer = arr1.length < arr2.length ? -1 : 1;
+        
+        for(int j = i; j < target.length; j++) {
+            int targetNum = Integer.parseInt(target[j]);
+            if(targetNum != 0) {
+                return answer;
             }
         }
         return 0;
