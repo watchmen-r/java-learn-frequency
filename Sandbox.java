@@ -1,7 +1,7 @@
-import CodeCracking.chapter001.Q002;
+import CodeCracking.chapter001.Q003;
 
 public class Sandbox {
     public static void main(String[] args) {
-        System.out.println(new Q002().checkPermutation());
+        System.out.println(new Q003().urlfy());
     }
 }
