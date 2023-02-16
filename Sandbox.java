@@ -1,7 +1,7 @@
-import CodeCracking.chapter001.Q006;
+import CodeCracking.chapter001.Q008;
 
 public class Sandbox {
     public static void main(String[] args) {
-        System.out.println(new Q006().compressString());
+        System.out.println(new Q008().searchZero());
     }
 }
