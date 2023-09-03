@@ -12,7 +12,7 @@ public class Q002 {
     }
 
     public Node createBst(int[] array) {
-        generateBst(array, 0, array.length - 1);
+        return generateBst(array, 0, array.length - 1);
     }
 
     private Node generateBst(int[] array, int left, int right) {
