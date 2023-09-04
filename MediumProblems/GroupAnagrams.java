@@ -3,28 +3,25 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-class GroupAnagrams {
-    public static void main(String[] args) {
-
-    }
-    
+class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
 
-        for(String str: strs) {
+        for (String str: strs) {
             char[] chars = str.toCharArray();
             Arrays.sort(chars);
-            String sorted = Arrays.toString(chars);
 
-            map.putIfAbsent(sorted, new ArrayList<String>());
-            map.get(sorted).add(str);
+            if (map.containsKey(String.valueOf(chars))) {
+                map.get(String.valueOf(chars)).add(str);
+            } else {
+                map.put(String.valueOf(chars), new ArrayList<>(){{
+                    add(str);
+                }});
+            }
         }
 
-        List<List<String>> answer = new ArrayList<>();
-        for(String key: map.keySet()) {
-            answer.add(map.get(key));
-        }
-        return answer;
+        return map.entrySet().stream().map(e -> e.getValue()).collect(Collectors.toList());
     }
 }
