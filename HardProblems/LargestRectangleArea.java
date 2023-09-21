@@ -2,29 +2,32 @@ import java.util.Stack;
 
 public class LargestRectangleArea {
     public int largestRectangleArea(int[] heights) {
-        int area = 0, n = heights.length;
-        int start;
-        Stack<Pair<Integer, Integer>> stack = new Stack<>();
+        int answer = 0, n = heights.length;
+        // Defines index 0 is horizontal axis, index 1 is height
+        Stack<int[]> stack = new Stack<>();
 
-        for(int i = 0; i < heights.length; i++) {
-            int curHeight = heights[i];
-            start = i;
-            while(!stack.isEmpty() && stack.peek().getValue() > curHeight) {
-                Pair<Integer, Integer> pair = stack.pop();
-                int horizontalIndex = pair.getKey();
-                int h = pair.getValue();
-                area = Math.max(area, h * (i - horizontalIndex));
-                start = horizontalIndex;
+        // Assigns index to store at the stack. If current coordinate is lower than past coordinate,
+        // can use this variable to calculate.
+        int startIndex;
+        for (int i = 0; i < heights.length; i++) {
+            startIndex = i;
+            while(!stack.empty() && stack.peek()[1] > heights[i]) {
+                int[] target = stack.pop();
+                int horizontalIndex = target[0];
+                int height = target[1];
+                answer = Math.max(answer, height * (i - horizontalIndex));
+                startIndex = horizontalIndex;
             }
-            stack.push(new Pair(start, curHeight));
+            // When calculate next, we use horizontalIndex whose height is more lower.
+            stack.push(new int[]{startIndex, heights[i]});
         }
 
-        while(!stack.isEmpty()) {
-            Pair<Integer, Integer> pair = stack.pop();
-            int index = pair.getKey();
-            int h = pair.getValue();
-            area = Math.max(area, h * (n - index));
+        while(!stack.empty()) {
+            int[] target = stack.pop();
+            int horizontalIndex = target[0];
+            int height = target[1];
+            answer = Math.max(answer, height * (n - horizontalIndex));
         }
-        return area;
+        return answer;
     }
 }
