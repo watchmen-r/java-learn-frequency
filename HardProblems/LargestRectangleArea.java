@@ -2,31 +2,26 @@ import java.util.Stack;
 
 public class LargestRectangleArea {
     public int largestRectangleArea(int[] heights) {
-        int answer = 0, n = heights.length;
-        // Defines index 0 is horizontal axis, index 1 is height
+        int answer = 0;
         Stack<int[]> stack = new Stack<>();
-
-        // Assigns index to store at the stack. If current coordinate is lower than past coordinate,
-        // can use this variable to calculate.
         int startIndex;
-        for (int i = 0; i < heights.length; i++) {
+        for (int i = 0;i < heights.length; i++) {
             startIndex = i;
-            while(!stack.empty() && stack.peek()[1] > heights[i]) {
+            while (!stack.isEmpty() && stack.peek()[1] > heights[i]) {
                 int[] target = stack.pop();
-                int horizontalIndex = target[0];
-                int height = target[1];
-                answer = Math.max(answer, height * (i - horizontalIndex));
-                startIndex = horizontalIndex;
+                int targetHorizontal = target[0];
+                int targetHeight = target[1];
+                answer = Math.max(answer, targetHeight * (i - targetHorizontal));
+                startIndex = targetHorizontal;
             }
-            // When calculate next, we use horizontalIndex whose height is more lower.
-            stack.push(new int[]{startIndex, heights[i]});
+            stack.add(new int[]{startIndex, heights[i]});
         }
 
-        while(!stack.empty()) {
+        while(!stack.isEmpty()) {
             int[] target = stack.pop();
-            int horizontalIndex = target[0];
-            int height = target[1];
-            answer = Math.max(answer, height * (n - horizontalIndex));
+            int targetHorizontal = target[0];
+            int targetHeight = target[1];
+            answer = Math.max(answer, targetHeight * (heights.length - targetHorizontal));
         }
         return answer;
     }
