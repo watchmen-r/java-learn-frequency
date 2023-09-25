@@ -2,31 +2,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Solution {
-    List<String> temp = new ArrayList<>();
+    List<String> parentheses = new ArrayList<>();
     List<String> answer = new ArrayList<>();
+    int num;
     public List<String> generateParenthesis(int n) {
-        backtrack(0, 0, n);
+        num = n;
+        backTracking(0, 0);
         return answer;
     }
 
-    void backtrack(int openN, int closeN, int n) {
-        if (temp.size() == n * 2) {
-            String tmpAnswer = temp.stream().reduce("", (sub, element) -> sub + element);
-            answer.add(tmpAnswer);
+    void backTracking(int left, int right) {
+        if (left + right == num * 2) {
+            answer.add(parentheses.stream().reduce("", (a, b) -> a + b));
+            return;
+        } 
+
+        if (left < num) {
+            parentheses.add("(");
+            backTracking(++left, right);
+            parentheses.remove(parentheses.size() - 1);
+            left--;
         }
 
-        if (openN < n) {
-            temp.add("(");
-            backtrack(++openN, closeN, n);
-            temp.remove(temp.size()-1);
-            openN--;
-        }
-
-        if (closeN < n && closeN < openN) {
-            temp.add(")");
-            backtrack(openN, ++closeN, n);
-            temp.remove(temp.size()-1);
-            closeN--;
+        if (right < left) {
+            parentheses.add(")");
+            backTracking(left, ++right);
+            parentheses.remove(parentheses.size() - 1);
+            right--;
         }
     }
 }
